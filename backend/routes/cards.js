@@ -7,8 +7,8 @@ const {
 } = require('../controllers/cards.js');
 const { validateMongooseId } = require('../middlewares/validate.js');
 
-router.post('/cards', createCard);
-router.get('/cards', getCards);
-router.delete('/cards/:id', validateMongooseId, deleteCard);
+router.post('/api/cards', createCard);
+router.get('/api/cards', getCards);
+router.delete('/api/cards/:id', validateMongooseId, deleteCard);
 
 module.exports = router;

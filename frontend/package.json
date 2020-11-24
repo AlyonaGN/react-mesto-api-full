@@ -13,10 +13,11 @@
     "react-scripts": "^4.0.0"
   },
   "scripts": {
-    "start": "node server.js", //"start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "npm run build && scp -r ./build/* alyona_gn@130.193.50.247:/home/alyona_gn/mesto-frontend"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,7 +35,7 @@
     ]
   },
   "devDependencies": {
-    "jest": "^26.6.3",
+    "jest": "26.6.0",
     "supertest": "^6.0.1"
   }
 }
