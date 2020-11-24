@@ -1,0 +1,16 @@
+.authentication__field {
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background-color: #000;
+    color: #fff;
+    padding-bottom: 13px;
+    padding-left: 0;
+    padding-right: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1.214;
+    width: 100%;
+    display: block;
+    margin: 0 auto 30px;
+}

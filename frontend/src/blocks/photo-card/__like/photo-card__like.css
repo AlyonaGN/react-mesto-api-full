@@ -1,0 +1,23 @@
+.photo-card__like {
+    height: 18.13px;
+    width: 20.76px;
+    font: inherit;
+    color: inherit;
+    background-image: url('../../../images/like.svg');
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    cursor: pointer;
+    background-position: center;
+    margin-bottom: 3px;
+}
+
+.photo-card__like:hover {
+    opacity: 0.6;
+    -webkit-transition: opacity 1.5s ease;
+    -moz-transition: opacity 1.5s ease;
+    -ms-transition: opacity 1.5s ease;
+    -o-transition: opacity 1.5s ease;
+    transition: opacity 1.5s ease;
+}

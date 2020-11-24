@@ -1,0 +1,7 @@
+.header__nav-list-item {
+    padding-right: 24px;
+  }
+  
+  .header__nav-list-item:last-child {
+    padding-right: 0;
+  }

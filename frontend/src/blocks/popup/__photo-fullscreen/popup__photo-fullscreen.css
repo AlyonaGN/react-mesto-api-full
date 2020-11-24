@@ -1,0 +1,7 @@
+.popup__photo-fullscreen {
+    object-fit: cover;
+    max-height: 75vh;
+    max-width: 75vw;
+    position: relative;
+}
+

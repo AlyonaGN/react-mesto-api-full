@@ -1,0 +1,10 @@
+.photo-card__likes-amount {
+    font: inherit;
+    color: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 1.23;
+    margin: 0;
+    text-align: center;
+}

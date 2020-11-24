@@ -1,0 +1,8 @@
+.header__nav-list {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin-top: 6px;
+    margin-left: auto;
+  }
+  

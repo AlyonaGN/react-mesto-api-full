@@ -1,0 +1,18 @@
+@import url(./__logo/header__logo.css);
+@import url(./__link/header__link.css);
+@import url(./__email/header__email.css);
+@import url(./__nav-list-item/header__nav-list-item.css);
+@import url(./__nav-list/header__nav-list.css);
+@import url(./__exit-button/header__exit-button.css);
+
+.header {
+  width: 73.5%;
+  display: flex;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+}
+
+@media screen and (max-width: 600px) {
+  .header {
+    width: 100%;
+  }
+}

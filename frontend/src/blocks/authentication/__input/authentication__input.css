@@ -1,0 +1,8 @@
+.authentication__input {
+    margin: 0;
+    display: block;
+}
+
+.authentication__input:last-of-type {
+    margin-bottom: 216px;
+}

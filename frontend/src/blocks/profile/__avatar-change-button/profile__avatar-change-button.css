@@ -1,0 +1,19 @@
+.profile__avatar-change-button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  background-image: url('../../../images/ava-edit-button.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  box-shadow: none;
+  cursor: pointer;
+}

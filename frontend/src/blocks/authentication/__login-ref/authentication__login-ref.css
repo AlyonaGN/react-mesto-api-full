@@ -1,0 +1,10 @@
+.authentication__login-ref {
+    cursor: pointer;
+    color: #FFF;
+    text-decoration: none;
+  }
+  
+  .authentication__login-ref:hover {
+    opacity: 0.6;
+    transition: opacity 1.5s ease;
+  }

@@ -1,0 +1,10 @@
+.preloader__text {
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    color: #FFF;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.22px;
+  }

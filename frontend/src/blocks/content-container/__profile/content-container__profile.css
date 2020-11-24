@@ -1,0 +1,9 @@
+.content-container__profile {
+  margin-bottom: 50px;
+}
+
+@media screen and (max-width: 600px) {
+  .content-container__profile {
+    margin-bottom: 36px;  
+  }
+}

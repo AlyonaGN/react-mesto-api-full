@@ -1,0 +1,8 @@
+@import url(./__list/photo-cards__list.css);
+
+.photo-cards {
+    width: 100%;
+    max-width: 1200px;
+}
+
+

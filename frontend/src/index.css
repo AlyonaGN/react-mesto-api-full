@@ -1,0 +1,20 @@
+@import url(./vendor/normalize.css);
+@import url(./fonts/inter.css);
+@import url(./blocks/root/root.css);
+@import url(./blocks/page/page.css);
+@import url(./blocks/header/header.css);
+@import url(./blocks/content-container/content-container.css);
+@import url(./blocks/photo-cards/photo-cards.css);
+@import url(./blocks/photo-card/photo-card.css);
+@import url(./blocks/profile/profile.css);
+@import url(./blocks/authentication/authentication.css);
+@import url(./blocks/preloader/preloader.css);
+@import url(./blocks/footer/footer.css);
+
+@import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/_opened/popup_opened.css);
+@import url(./blocks/popup/__submit-button/_inactive/popup__submit-button_inactive.css);
+@import url(./blocks/popup/__field/_type/popup__field_type_error.css);
+@import url(./blocks/popup/__input/_type/popup__input_type_error.css);
+
+@import url(./blocks/photo-card/__like/_active/photo-card__like_active.css);

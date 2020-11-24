@@ -1,0 +1,10 @@
+.popup__submit-button_inactive {
+  font: inherit;
+  color: rgba(0,0,0, 0.2);
+  background-color: #FFF;
+  border: 1px rgba(0,0,0, 0.2) solid;
+}
+
+.popup__submit-button_inactive:hover {
+  background: #FFF;
+}

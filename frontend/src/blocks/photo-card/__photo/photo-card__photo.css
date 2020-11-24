@@ -1,0 +1,7 @@
+.photo-card__photo {
+    object-fit: cover;
+    cursor: pointer;
+    height: 282px;
+    width: 100%;
+}
+

@@ -1,4 +1,3 @@
-# react-mesto-api-full
 # Проект Mesto фронтенд + бэкенд
 
 ## Директории
@@ -13,7 +12,3 @@
 
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
-
-## url
-
-

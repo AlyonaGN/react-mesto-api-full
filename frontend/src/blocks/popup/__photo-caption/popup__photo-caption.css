@@ -1,0 +1,13 @@
+.popup__photo-caption {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 1.25;
+    margin: 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    color: #FFF;
+}
