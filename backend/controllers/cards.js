@@ -35,8 +35,8 @@ const deleteCard = (req, res, next) => {
   const { id } = req.params;
   Card.findById(id)
     .then((card) => {
-      console.log(typeof req.user._id, typeof card.owner);
-      if (req.user._id !== card.owner) {
+      const cardOwner = card.owner.toString();
+      if (req.user._id !== cardOwner) {
         throw new ForbiddenError('Невозможно удалить карточку другого пользователя');
       }
 
