@@ -4,11 +4,13 @@ const {
   getUsers,
   getUser,
   getMyUser,
+  updateProfile
 } = require('../controllers/users.js');
 const { validateMongooseId } = require('../middlewares/validate.js');
 
 router.get('/api/users', getUsers);
 router.get('/api/users/me', getMyUser);
+router.patch('/api/users/me', updateProfile);
 router.get('/api/users/:id', validateMongooseId, getUser);
 
 module.exports = router;

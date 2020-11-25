@@ -71,6 +71,29 @@ const createUser = (req, res, next) => {
     .catch(next);
 };
 
+const updateProfile = (req, res, next) => {
+  const id = req.user._id;
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
+  User.findOneAndUpdate({_id: id}, { name, about, avatar, email, password }, {
+    new: true,
+    runValidators: true,
+    upsert: true,
+    omitUndefined: true,
+  })
+    .then((user) => res.send({ data: user }))
+    .catch((error) => {
+      if (error.name === 'CastError') {
+        throw new IncorrectInputError('Переданы некорректные данные');
+      } else if (error.message === 'NotFound') {
+        throw new NotFoundError('Объект не найден');
+      }
+      throw error;
+    })
+    .catch(next);
+};
+
 const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
@@ -90,4 +113,5 @@ module.exports = {
   getMyUser,
   createUser,
   login,
+  updateProfile
 };
