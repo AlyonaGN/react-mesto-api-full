@@ -23,8 +23,26 @@ const createCard = (req, res, next) => {
 
 const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
-    req.params.cardId,
+    req.params.id,
     { $addToSet: { likes: req.user._id } },
+    { new: true },
+  )
+    .orFail(new Error('Карточка не найдена'))
+    .then((updatedCard) => {
+      res.send({data: updatedCard});
+    })
+    .catch((error) => {
+      throw new NotFoundError(error.message);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+const removeLikefromCard = (req, res, next) => {
+  Card.findByIdAndUpdate(
+    req.params.id,
+    { $pull: { likes: req.user._id } },
     { new: true },
   )
     .orFail(new Error('Карточка не найдена'))
@@ -91,5 +109,6 @@ module.exports = {
   createCard,
   getCards,
   deleteCard,
-  likeCard
+  likeCard,
+  removeLikefromCard
 };
