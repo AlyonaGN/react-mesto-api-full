@@ -40,8 +40,11 @@ function App() {
 
   const checkToken = useCallback(() => {
     const jwt = getToken();
-
+    console.log(jwt);
     if (!jwt) {
+      setIsLoading(false);
+      setLoggedIn(false);
+      history.push(ROUTES_MAP.SIGNIN);
       return;
     }
 
@@ -65,31 +68,24 @@ function App() {
   }, [setLoggedIn, history]);
 
   React.useEffect(() => {
-    checkToken()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    Promise.all([api.loadAppInfo()
-      .then(([cardsFromServer, userData]) => {
-        const initialCards = cardsFromServer.map((initialCard) => {
-          return api.createCard(initialCard);
+      checkToken();
+/*       Promise.all([api.loadAppInfo()
+        .then(([cardsFromServer, userData]) => {
+          const initialCards = cardsFromServer.map((initialCard) => {
+            return api.createCard(initialCard);
+          })
+          setCards(initialCards);
+          setUser(userData);
         })
-        setCards(initialCards);
-        setUser(userData);
-      })
-      .catch((err) => {
-        console.log(err);
-      }), checkToken()])
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+        .catch((err) => {
+          console.log(err);
+        }), checkToken()])
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        }); */
   }, []);
 
   const handleCardLike = useCallback((card) => {
