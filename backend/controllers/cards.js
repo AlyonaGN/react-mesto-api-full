@@ -29,7 +29,7 @@ const likeCard = (req, res, next) => {
   )
     .orFail(new Error('Карточка не найдена'))
     .then((updatedCard) => {
-      res.send({data: updatedCard});
+      res.send({ data: updatedCard });
     })
     .catch((error) => {
       throw new NotFoundError(error.message);
@@ -47,7 +47,7 @@ const removeLikefromCard = (req, res, next) => {
   )
     .orFail(new Error('Карточка не найдена'))
     .then((updatedCard) => {
-      res.send({data: updatedCard});
+      res.send({ data: updatedCard });
     })
     .catch((error) => {
       throw new NotFoundError(error.message);
@@ -110,5 +110,5 @@ module.exports = {
   getCards,
   deleteCard,
   likeCard,
-  removeLikefromCard
+  removeLikefromCard,
 };

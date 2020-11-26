@@ -57,6 +57,7 @@ function App() {
       .then(() => {
         setLoggedIn(true);
         history.push(ROUTES_MAP.MAIN);
+        return jwt;
       })
       .catch((err) => {
         console.log(err);
@@ -64,13 +65,21 @@ function App() {
   }, [setLoggedIn, history]);
 
   React.useEffect(() => {
+    checkToken()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     Promise.all([api.loadAppInfo()
       .then(([cardsFromServer, userData]) => {
-      const initialCards = cardsFromServer.map((initialCard) => {
-        return api.createCard(initialCard);
-      })
-      setCards(initialCards);
-      setUser(userData);
+        const initialCards = cardsFromServer.map((initialCard) => {
+          return api.createCard(initialCard);
+        })
+        setCards(initialCards);
+        setUser(userData);
       })
       .catch((err) => {
         console.log(err);
@@ -80,7 +89,7 @@ function App() {
       })
       .finally(() => {
         setIsLoading(false);
-      })
+      });
   }, []);
 
   const handleCardLike = useCallback((card) => {

@@ -1,3 +1,5 @@
+import { getToken } from "./token";
+
 class Api {
     constructor({ baseUrl, headers }) {
         this.baseUrl = baseUrl;
@@ -5,8 +7,8 @@ class Api {
     }
 
     getUserData() {
-        return fetch(`${this.baseUrl}/users/me`, {
-            headers: this.headers,
+        this.makeApiRequest(`${this.baseUrl}/users/me`, {
+            headers: this.headers
         })
             .then(res => {
                 return this._getResponseData(res);
@@ -26,8 +28,8 @@ class Api {
       }
 
     getInitialCards() {
-        return fetch(`${this.baseUrl}/cards`, {
-            headers: this.headers,
+        this.makeApiRequest(`${this.baseUrl}/cards`, {
+            headers: this.headers
         })
             .then(res => {
                 return this._getResponseData(res);
@@ -35,7 +37,7 @@ class Api {
     }
 
     editProfile(formValues) {
-        return fetch(`${this.baseUrl}/users/me`, {
+        this.makeApiRequest(`${this.baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
@@ -49,7 +51,7 @@ class Api {
     }
 
     addNewCard(pictureLink, pictureDescription) {
-        return fetch(`${this.baseUrl}/cards`, {
+        this.makeApiRequest(`${this.baseUrl}/cards`, {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify({
@@ -63,9 +65,9 @@ class Api {
     }
 
     deleteCard(cardId) {
-        return fetch(`${this.baseUrl}/cards/${cardId}`, {
+        this.makeApiRequest(`${this.baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
-            headers: this.headers,
+            headers: this.headers
         })
             .then(res => {
                 return this._getResponseData(res);
@@ -74,18 +76,18 @@ class Api {
 
     changeLikeCardStatus(cardId, isLiked) {
         if (!isLiked) {
-            return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+            this.makeApiRequest(`${this.baseUrl}/cards/likes/${cardId}`, {
                 method: 'PUT',
-                headers: this.headers,
+                headers: this.headers
             })
                 .then(res => {
                     return this._getResponseData(res);
                 });
         }
         else {
-            return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+            this.makeApiRequest(`${this.baseUrl}/cards/likes/${cardId}`, {
                 method: 'DELETE',
-                headers: this.headers,
+                headers: this.headers
             })
                 .then(res => {
                     return this._getResponseData(res);
@@ -94,12 +96,12 @@ class Api {
     }
 
     changeAvatar(avatarLink) {
-        return fetch(`${this.baseUrl}/users/me/avatar`, {
+        this.makeApiRequest(`${this.baseUrl}/users/me/avatar`, {
             method: 'PATCH',
-            headers: this.headers,
             body: JSON.stringify({
                 avatar: avatarLink,
-            })
+            }),
+            headers: this.headers
         })
             .then(res => {
                 return this._getResponseData(res);
@@ -117,13 +119,25 @@ class Api {
     loadAppInfo() {
         return Promise.all([this.getInitialCards(), this.getUserData()]);
       }
+    
+    makeApiRequest(url, config) {
+        const token = getToken();
 
+        if (!token) {
+            return;
+        }
+        if (!config.headers) {
+          config.headers = { authorization: `Bearer ${token}` };
+        } else {
+          config.headers.authorization = `Bearer ${token}`;
+        }
+        return fetch(url, config);
+    }
 }
 
 export const api = new Api({
-    baseUrl: 'https://alyonag.students.nomoreparties.co/api/',
+    baseUrl: 'https://alyonag.students.nomoreparties.co/api',
     headers: {
-        authorization: '281eea5d-a9b0-4240-a494-1ec91d19957f',
         'Content-Type': 'application/json'
     }
 });

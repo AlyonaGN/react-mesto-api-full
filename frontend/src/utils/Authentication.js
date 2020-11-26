@@ -1,7 +1,7 @@
 import { ROUTES_MAP } from "./routesMap";
 import { setToken } from "./token";
 
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://alyonag.students.nomoreparties.co/api';
 
 export const register = (password, email) => {
     return fetch(`${BASE_URL}${ROUTES_MAP.SIGNUP}`, {

@@ -5,6 +5,7 @@ const { errors } = require('celebrate');
 const { PORT = 3000 } = process.env;
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { validateSignupBody, validateSigninBody } = require('./middlewares/validate.js');
 
@@ -24,13 +25,14 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger);
 
-app.post('/signin', validateSigninBody, login);
-app.post('/signup', validateSignupBody, createUser);
+app.post('/api/signin', validateSigninBody, login);
+app.post('/api/signup', validateSignupBody, createUser);
 
 app.use(auth);
 app.use('/', userRoutes);
