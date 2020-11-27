@@ -137,6 +137,7 @@ class Api {
 
 export const api = new Api({
     baseUrl: 'https://alyonag.students.nomoreparties.co/api',
+    //baseUrl: 'http://localhost:4000/api',
     headers: {
         'Content-Type': 'application/json'
     }

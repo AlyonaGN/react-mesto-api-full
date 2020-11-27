@@ -56,7 +56,7 @@ const createUser = (req, res, next) => {
   } = req.body;
   const userEmail = req.body.email;
 
-  User.findOne({ userEmail })
+  User.findOne({ email: userEmail })
     .then((user) => {
       if (user) {
         throw new ConflictError('Пользователь с таким email уже зарегистрирован');
@@ -78,7 +78,9 @@ const createUser = (req, res, next) => {
         })
         .catch(next);
     })
-    .catch(next);
+    .catch((err) => {
+      next(err);
+    });
 };
 
 const updateProfile = (req, res, next) => {

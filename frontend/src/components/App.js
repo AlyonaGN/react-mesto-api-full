@@ -55,6 +55,23 @@ function App() {
             id: res.data._id,
             email: res.data.email
           })
+          api.loadAppInfo()
+            .then(([cardsFromServer, userData]) => {
+              const initialCards = cardsFromServer.map((initialCard) => {
+                return api.createCard(initialCard);
+              })
+              setCards(initialCards);
+              setUser(userData);
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+            .finally(() => {
+              setIsLoading(false);
+            });
         }
       })
       .then(() => {
@@ -69,23 +86,6 @@ function App() {
 
   React.useEffect(() => {
       checkToken();
-/*       Promise.all([api.loadAppInfo()
-        .then(([cardsFromServer, userData]) => {
-          const initialCards = cardsFromServer.map((initialCard) => {
-            return api.createCard(initialCard);
-          })
-          setCards(initialCards);
-          setUser(userData);
-        })
-        .catch((err) => {
-          console.log(err);
-        }), checkToken()])
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        }); */
   }, []);
 
   const handleCardLike = useCallback((card) => {
@@ -188,16 +188,15 @@ function App() {
                 function handleRegister(password, email) {
                   register(password, email)
                   .then((res) => {
+                    console.log(res);
                     if (res) {
                       setRegistrationSuccessfull(true);
                     }
                   })
-                  .then(() => {
-                    setRegistrationPopupOpen(true);
-                  })
                   .catch((err) => {
                     console.log(err);
-                  })
+                  });
+                  setRegistrationPopupOpen(true);
                 }
               } 
             />

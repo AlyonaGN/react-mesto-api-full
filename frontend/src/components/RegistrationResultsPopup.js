@@ -3,6 +3,7 @@ import successImgPath from '../images/successReg.png';
 import unsuccessImgPath from '../images/unsuccessReg.png';
 
 function RegistrationResultsPopup({onClose, isOpen, isRegSuccessfull}) {
+    console.log(isRegSuccessfull);
     return (
         <div className={`popup ${isOpen && `popup_opened`}`} >
         
