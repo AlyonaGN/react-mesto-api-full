@@ -47,45 +47,43 @@ function App() {
       history.push(ROUTES_MAP.SIGNIN);
       return;
     }
-
-    getContent(jwt)
-      .then((res) => {
-        if (res) {
-          setUserData({
-            id: res.data._id,
-            email: res.data.email
-          })
-          api.loadAppInfo()
-            .then(([cardsFromServer, userData]) => {
-              const initialCards = cardsFromServer.map((initialCard) => {
-                return api.createCard(initialCard);
-              })
-              setCards(initialCards);
-              setUser(userData);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-            .finally(() => {
-              setIsLoading(false);
-            });
-        }
-      })
-      .then(() => {
-        setLoggedIn(true);
-        history.push(ROUTES_MAP.MAIN);
-        return jwt;
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    
+    return jwt;
   }, [setLoggedIn, history]);
 
   React.useEffect(() => {
-      checkToken();
+    const jwt =  checkToken();
+      
+    if (jwt) {
+      getContent(jwt)
+        .then(async (res) => {
+          if (res) {
+            setUserData({
+              id: res.data._id,
+              email: res.data.email
+            })
+            const user = await api.getUserData();
+            setUser(user); 
+
+            const cards = await api.getInitialCards();
+            const initialCards = cards.data.map((initialCard) => {
+              return api.createCard(initialCard);
+            })
+            console.log(cards);
+            console.log(initialCards);
+            setCards(initialCards);
+
+            setIsLoading(false);
+          }
+        })
+        .then(() => {
+          setLoggedIn(true);
+          history.push(ROUTES_MAP.MAIN);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
   }, []);
 
   const handleCardLike = useCallback((card) => {
@@ -208,9 +206,7 @@ function App() {
                     .then((res) => {
                       console.log(res);   
                       if (res) {
-                        setUserData(userData);
-                        setLoggedIn(true);
-                        history.push(ROUTES_MAP.MAIN);
+                        getContent(res);
                       }
                     })
                     .catch((err) => {

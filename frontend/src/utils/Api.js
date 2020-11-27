@@ -6,13 +6,14 @@ class Api {
         this.headers = headers;
     }
 
-    getUserData() {
-        this.makeApiRequest(`${this.baseUrl}/users/me`, {
+    async getUserData() {
+        const response = await this.makeApiRequest(`${this.baseUrl}/users/me`, {
+            method: 'GET',
             headers: this.headers
-        })
-            .then(res => {
-                return this._getResponseData(res);
-            });
+        });
+        const content = await this._getResponseData(response);
+        console.log(content)
+        return content;
     }
 
     createCard(serverCard) {
@@ -23,17 +24,18 @@ class Api {
           likes: serverCard.likes,
           likesAmount: serverCard.likes.length,
           id: serverCard._id,
-          ownerId: serverCard.owner._id,
+          ownerId: serverCard.owner,
         }
       }
 
-    getInitialCards() {
-        this.makeApiRequest(`${this.baseUrl}/cards`, {
+    async getInitialCards() {
+        const response = await this.makeApiRequest(`${this.baseUrl}/cards`, {
+            method: 'GET',
             headers: this.headers
-        })
-            .then(res => {
-                return this._getResponseData(res);
-            });
+        });
+        const content = await this._getResponseData(response);
+        console.log(content)
+        return content;
     }
 
     editProfile(formValues) {
@@ -112,13 +114,19 @@ class Api {
         if (res.ok) {
             return res.json();
         }
-
+/*         res.json()
+            .then((content) => {
+                return content;
+            })
+            .catch((err) => {
+                return err;
+            }); */
         return Promise.reject(new Error(`Ошибка: ${res.status}`));
     }
 
-    loadAppInfo() {
-        return Promise.all([this.getInitialCards(), this.getUserData()]);
-      }
+    async loadAppInfo() {
+         Promise.all([await this.getUserData(), this.getInitialCards()]);
+      } 
     
     makeApiRequest(url, config) {
         const token = getToken();
@@ -127,10 +135,11 @@ class Api {
             return;
         }
         if (!config.headers) {
-          config.headers = { authorization: `Bearer ${token}` };
+            config.headers = { authorization: `Bearer ${token}` };
         } else {
-          config.headers.authorization = `Bearer ${token}`;
+            config.headers.authorization = `Bearer ${token}`;
         }
+
         return fetch(url, config);
     }
 }
