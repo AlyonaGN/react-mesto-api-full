@@ -4,6 +4,7 @@ import logoPath from '../images/header-logo.png';
 import { ROUTES_MAP } from '../utils/routesMap';
 
 function Header({email, onSignout}) {
+  console.log(email);
   return (
     <Route path="*">
       <header className="header page__header">
@@ -11,7 +12,7 @@ function Header({email, onSignout}) {
             <Switch>
               <Route exact path={ROUTES_MAP.MAIN}>
                 <ul className="header__nav-list">
-                  <li className="header__nav-list-item"><span className="header__email">{email ? email : ''}</span></li>
+                  <li className="header__nav-list-item"><span className="header__email">{email ? email : ""}</span></li>
                   <li className="header__nav-list-item"><button className="header__exit-button" onClick={onSignout}>Выйти</button></li>
                 </ul>
               </Route>

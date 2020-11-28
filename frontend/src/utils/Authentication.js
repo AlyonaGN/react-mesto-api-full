@@ -16,8 +16,7 @@ export const register = (password, email) => {
                   return response.json();
                 }
                 else {
-                    console.log(response);
-                    return;
+                  return Promise.reject(new Error(`Ошибка: ${response.status}`));
                 }
         })
 };
@@ -33,6 +32,7 @@ export const login = (password, email) => {
     .then(response => response.json())
     .then((data) => {
       if (data.token){
+        
         setToken(data.token);
         return data;
       }
@@ -40,6 +40,7 @@ export const login = (password, email) => {
   };
   
   export const getContent = (token) => {
+    console.log(token);
     return fetch(`${BASE_URL}${ROUTES_MAP.USER_INFO}`, {
       method: 'GET',
       headers: {

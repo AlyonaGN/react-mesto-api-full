@@ -9,7 +9,7 @@ const ConflictError = require('../errors/conflict-err');
 const getUsers = (req, res, next) => {
   User.find({})
     .then((usersData) => {
-      res.send({ data: usersData });
+      res.send({ usersData });
     })
     .catch(next);
 };
@@ -19,7 +19,7 @@ const getUser = (req, res, next) => {
   User.findById(id)
     .orFail(new Error('NotFound'))
     .then((userData) => {
-      res.send({ data: userData });
+      res.send({ userData });
     })
     .catch((error) => {
       if (error.name === 'CastError') {
@@ -37,7 +37,7 @@ const getMyUser = (req, res, next) => {
   User.findById(id)
     .orFail(new Error('NotFound'))
     .then((userData) => {
-      res.send({ data: userData });
+      res.send({ userData });
     })
     .catch((error) => {
       if (error.name === 'CastError') {
@@ -96,7 +96,7 @@ const updateProfile = (req, res, next) => {
     upsert: true,
     omitUndefined: true,
   })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({ user }))
     .catch((error) => {
       if (error.name === 'CastError') {
         throw new IncorrectInputError('Переданы некорректные данные');
@@ -116,7 +116,7 @@ const updateAvatar = (req, res, next) => {
     runValidators: true,
     upsert: true,
   })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({ user }))
     .catch((error) => {
       if (error.name === 'CastError') {
         throw new IncorrectInputError('Переданы некорректные данные');

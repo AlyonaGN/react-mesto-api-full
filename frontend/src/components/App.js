@@ -34,7 +34,6 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isRegistrationPopupOpen, setRegistrationPopupOpen] = React.useState(false);
   const [isRegistrationSuccessfull, setRegistrationSuccessfull] = React.useState(false);
-  const [userData, setUserData] = React.useState({id: '', email: ''});
   const [isLoading, setIsLoading] = React.useState(true);
   const history = useHistory();
 
@@ -55,39 +54,12 @@ function App() {
     const jwt =  checkToken();
       
     if (jwt) {
-      getContent(jwt)
-        .then(async (res) => {
-          if (res) {
-            setUserData({
-              id: res.data._id,
-              email: res.data.email
-            })
-            const user = await api.getUserData();
-            setUser(user); 
-
-            const cards = await api.getInitialCards();
-            const initialCards = cards.data.map((initialCard) => {
-              return api.createCard(initialCard);
-            })
-            console.log(cards);
-            console.log(initialCards);
-            setCards(initialCards);
-
-            setIsLoading(false);
-          }
-        })
-        .then(() => {
-          setLoggedIn(true);
-          history.push(ROUTES_MAP.MAIN);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      prepareAppForLogin(jwt)
       }
   }, []);
 
   const handleCardLike = useCallback((card) => {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
 
     api.changeLikeCardStatus(card.id, isLiked)
       .then((newCard) => {
@@ -116,6 +88,29 @@ function App() {
     }
     setRegistrationSuccessfull(false);
   }, [closeAllPopups, history, isRegistrationSuccessfull]);
+
+  const prepareAppForLogin = useCallback((jwt) => {
+    getContent(jwt)
+        .then(async (res) => {
+          if (res) {
+            setUser(res); 
+            const cards = await api.getInitialCards();
+            const initialCards = cards.map((initialCard) => {
+              return api.createCard(initialCard);
+            })
+            setCards(initialCards);
+            setIsLoading(false);
+          }
+        })
+        .then(() => {
+          setLoggedIn(true);
+          history.push(ROUTES_MAP.MAIN);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log(cards);
+  }, [history]);
   
   const handleDeleteCard = useCallback(() => {
     const cardId = cardToBeDeleted.id;
@@ -179,39 +174,40 @@ function App() {
 
     return (isLoading ? <span className="preloader__text">Секундочку...</span> :
       <CurrentUserContext.Provider value={currentUser}>
-          <Header email={userData.email} onSignout={handleSignout} />
+          <Header email={loggedIn ? currentUser.email : ""} onSignout={handleSignout} />
           <Switch>
             <Route path={ROUTES_MAP.SIGNUP}>
               <Register onClose={closeAllPopups} onRegister={
                 function handleRegister(password, email) {
                   register(password, email)
                   .then((res) => {
-                    console.log(res);
                     if (res) {
                       setRegistrationSuccessfull(true);
+                      setRegistrationPopupOpen(true);
                     }
                   })
                   .catch((err) => {
+                    setRegistrationPopupOpen(true);
                     console.log(err);
                   });
-                  setRegistrationPopupOpen(true);
                 }
               } 
             />
             </Route>
             <Route path={ROUTES_MAP.SIGNIN}>
               <Login onLogin={
-                function handleLogin(password, email) {
+                 function handleLogin(password, email) {
+                    setIsLoading(true);
                     login(password, email)
                     .then((res) => {
                       console.log(res);   
                       if (res) {
-                        getContent(res);
+                        prepareAppForLogin(res.token);
                       }
                     })
                     .catch((err) => {
                       console.log(err);
-                    })
+                    })                       
                 }
               }/>
             </Route>

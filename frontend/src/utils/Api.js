@@ -6,17 +6,8 @@ class Api {
         this.headers = headers;
     }
 
-    async getUserData() {
-        const response = await this.makeApiRequest(`${this.baseUrl}/users/me`, {
-            method: 'GET',
-            headers: this.headers
-        });
-        const content = await this._getResponseData(response);
-        console.log(content)
-        return content;
-    }
-
     createCard(serverCard) {
+        console.log(serverCard);
         return {
           src: serverCard.link,
           alt: serverCard.name,
@@ -39,7 +30,7 @@ class Api {
     }
 
     editProfile(formValues) {
-        this.makeApiRequest(`${this.baseUrl}/users/me`, {
+        return this.makeApiRequest(`${this.baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
@@ -53,7 +44,7 @@ class Api {
     }
 
     addNewCard(pictureLink, pictureDescription) {
-        this.makeApiRequest(`${this.baseUrl}/cards`, {
+        return this.makeApiRequest(`${this.baseUrl}/cards`, {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify({
@@ -67,7 +58,7 @@ class Api {
     }
 
     deleteCard(cardId) {
-        this.makeApiRequest(`${this.baseUrl}/cards/${cardId}`, {
+        return this.makeApiRequest(`${this.baseUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this.headers
         })
@@ -78,7 +69,7 @@ class Api {
 
     changeLikeCardStatus(cardId, isLiked) {
         if (!isLiked) {
-            this.makeApiRequest(`${this.baseUrl}/cards/likes/${cardId}`, {
+            return this.makeApiRequest(`${this.baseUrl}/cards/${cardId}/likes`, {
                 method: 'PUT',
                 headers: this.headers
             })
@@ -87,7 +78,7 @@ class Api {
                 });
         }
         else {
-            this.makeApiRequest(`${this.baseUrl}/cards/likes/${cardId}`, {
+            return this.makeApiRequest(`${this.baseUrl}/cards/${cardId}/likes`, {
                 method: 'DELETE',
                 headers: this.headers
             })
@@ -98,7 +89,7 @@ class Api {
     }
 
     changeAvatar(avatarLink) {
-        this.makeApiRequest(`${this.baseUrl}/users/me/avatar`, {
+       return this.makeApiRequest(`${this.baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             body: JSON.stringify({
                 avatar: avatarLink,
@@ -123,10 +114,6 @@ class Api {
             }); */
         return Promise.reject(new Error(`Ошибка: ${res.status}`));
     }
-
-    async loadAppInfo() {
-         Promise.all([await this.getUserData(), this.getInitialCards()]);
-      } 
     
     makeApiRequest(url, config) {
         const token = getToken();

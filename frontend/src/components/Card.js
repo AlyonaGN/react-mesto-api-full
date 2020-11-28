@@ -16,7 +16,7 @@ function Card({cardId, card, onCardClick, onCardLike, onCardDelete }) {
 
     const currentUserData = React.useContext(CurrentUserContext);
     const isOwnCard = card.ownerId === currentUserData._id;
-    const isLiked = card.likes.some(item => item._id === currentUserData._id);
+    const isLiked = card.likes.some(id => id === currentUserData._id);
 
     const cardDeleteButtonClassName = (
         `photo-card__delete-button ${isOwnCard && 'photo-card__delete-button_visible'}`
