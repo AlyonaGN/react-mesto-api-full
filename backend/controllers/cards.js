@@ -29,7 +29,7 @@ const likeCard = (req, res, next) => {
   )
     .orFail(new Error('Карточка не найдена'))
     .then((updatedCard) => {
-      res.send({ updatedCard });
+      res.send(updatedCard);
     })
     .catch((error) => {
       throw new NotFoundError(error.message);
@@ -47,7 +47,7 @@ const removeLikefromCard = (req, res, next) => {
   )
     .orFail(new Error('Карточка не найдена'))
     .then((updatedCard) => {
-      res.send({ updatedCard });
+      res.send(updatedCard);
     })
     .catch((error) => {
       throw new NotFoundError(error.message);
@@ -60,7 +60,7 @@ const removeLikefromCard = (req, res, next) => {
 const getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => {
-      res.send({ cards });
+      res.send(cards);
     })
     .catch((err) => {
       next(err);
@@ -79,7 +79,7 @@ const deleteCard = (req, res, next) => {
 
       Card.deleteOne({ _id: id })
         .orFail(new Error('Карточка не найдена'))
-        .then((deletedCard) => res.send({ deletedCard }))
+        .then((deletedCard) => res.send(deletedCard))
         .catch((error) => {
           if (error.name === 'CastError') {
             throw new IncorrectInputError('Переданы некорректные данные');
