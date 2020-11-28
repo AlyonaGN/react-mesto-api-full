@@ -203,7 +203,11 @@ function App() {
                       console.log(res);   
                       if (res) {
                         prepareAppForLogin(res.token);
+                      } else {
+                        setIsLoading(false);
+                        history.push(ROUTES_MAP.SIGNIN);
                       }
+
                     })
                     .catch((err) => {
                       console.log(err);

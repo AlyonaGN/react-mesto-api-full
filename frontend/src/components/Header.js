@@ -4,7 +4,6 @@ import logoPath from '../images/header-logo.png';
 import { ROUTES_MAP } from '../utils/routesMap';
 
 function Header({email, onSignout}) {
-  console.log(email);
   return (
     <Route path="*">
       <header className="header page__header">
