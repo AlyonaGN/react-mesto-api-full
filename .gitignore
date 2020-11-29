@@ -21,4 +21,7 @@
 .idea
 .vscode
 
+# env
+/backend/.env
+
 
