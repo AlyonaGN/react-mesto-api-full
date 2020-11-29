@@ -197,8 +197,7 @@ function App() {
                  function handleLogin(password, email) {
                     setIsLoading(true);
                     login(password, email)
-                    .then((res) => {
-                      console.log(res);   
+                    .then((res) => {  
                       if (res) {
                         prepareAppForLogin(res.token);
                       } else {
