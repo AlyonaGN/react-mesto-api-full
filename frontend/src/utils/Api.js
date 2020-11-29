@@ -7,7 +7,6 @@ class Api {
     }
 
     createCard(serverCard) {
-        console.log(serverCard);
         return {
           src: serverCard.link,
           alt: serverCard.name,
@@ -25,7 +24,6 @@ class Api {
             headers: this.headers
         });
         const content = await this._getResponseData(response);
-        console.log(content)
         return content;
     }
 

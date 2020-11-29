@@ -40,7 +40,6 @@ export const login = (password, email) => {
   };
   
   export const getContent = (token) => {
-    console.log(token);
     return fetch(`${BASE_URL}${ROUTES_MAP.USER_INFO}`, {
       method: 'GET',
       headers: {

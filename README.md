@@ -15,5 +15,7 @@
 `npm run dev` — запускает сервер с hot-reload
 
 ## url
+https://alyonag.students.nomoreparties.co/
+https://www.alyonag.students.nomoreparties.co/
 
 

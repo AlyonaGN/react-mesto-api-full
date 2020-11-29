@@ -39,7 +39,6 @@ function App() {
 
   const checkToken = useCallback(() => {
     const jwt = getToken();
-    console.log(jwt);
     if (!jwt) {
       setIsLoading(false);
       setLoggedIn(false);
@@ -109,7 +108,6 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-      console.log(cards);
   }, [history]);
   
   const handleDeleteCard = useCallback(() => {
