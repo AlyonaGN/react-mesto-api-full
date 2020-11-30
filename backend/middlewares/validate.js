@@ -30,7 +30,7 @@ const validateSignupBody = celebrate({
     avatar: Joi.string(),
     email: Joi.string().required().custom((value, helpres) => {
       if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
-        return true;
+        return value;
       }
       return helpres.message('Невалидный email');
     }),
@@ -45,7 +45,7 @@ const validateUpdatesToProfile = celebrate({
     avatar: Joi.string(),
     email: Joi.string().custom((value, helpres) => {
       if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
-        return true;
+        return value;
       }
       return helpres.message('Невалидный email');
     }),
@@ -65,7 +65,7 @@ const validateCard = celebrate({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().custom((value, helpres) => {
       if (/https?:\/\/(www\.)?([^#\s])+\.[^#\s]+#?$/.test(value)) {
-        return true;
+        return value;
       }
       return helpres.message('Невалидная ссылка');
     }),
@@ -76,7 +76,7 @@ const validateAvatar = celebrate({
   body: Joi.object().keys({
     avatar: Joi.string().required().custom((value, helpres) => {
       if (/https?:\/\/(www\.)?([^#\s])+\.[^#\s]+#?$/.test(value)) {
-        return true;
+        return value;
       }
       return helpres.message('Невалидная ссылка');
     }),
