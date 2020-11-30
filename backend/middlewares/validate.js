@@ -1,9 +1,20 @@
 const { ObjectId } = require('mongoose').Types;
 const { celebrate, Joi } = require('celebrate');
 
-const validateMongooseId = celebrate({
+const validateMongooseIdInParams = celebrate({
   params: Joi.object().keys({
     id: Joi.string().alphanum().required().custom((value, helpres) => {
+      if (ObjectId.isValid(value)) {
+        return value;
+      }
+      return helpres.message('Невалидный id');
+    }),
+  }),
+});
+
+const validateMongooseIdInRequest = celebrate({
+  body: Joi.object().keys({
+    _id: Joi.string().alphanum().required().custom((value, helpres) => {
       if (ObjectId.isValid(value)) {
         return value;
       }
@@ -17,8 +28,28 @@ const validateSignupBody = celebrate({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
     avatar: Joi.string(),
-    email: Joi.string().required(),
-    password: Joi.string().required().min(5),
+    email: Joi.string().required().custom((value, helpres) => {
+      if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
+        return true;
+      }
+      return helpres.message('Невалидный email');
+    }),
+    password: Joi.string().required().min(5).trim(),
+  }),
+});
+
+const validateUpdatesToProfile = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string(),
+    email: Joi.string().custom((value, helpres) => {
+      if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
+        return true;
+      }
+      return helpres.message('Невалидный email');
+    }),
+    password: Joi.string().min(5).trim(),
   }),
 });
 
@@ -29,8 +60,35 @@ const validateSigninBody = celebrate({
   }),
 });
 
+const validateCard = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().custom((value, helpres) => {
+      if (/https?:\/\/(www\.)?([^#\s])+\.[^#\s]+#?$/.test(value)) {
+        return true;
+      }
+      return helpres.message('Невалидная ссылка');
+    }),
+  }),
+});
+
+const validateAvatar = celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().required().custom((value, helpres) => {
+      if (/https?:\/\/(www\.)?([^#\s])+\.[^#\s]+#?$/.test(value)) {
+        return true;
+      }
+      return helpres.message('Невалидная ссылка');
+    }),
+  }),
+});
+
 module.exports = {
-  validateMongooseId,
+  validateMongooseIdInParams,
   validateSignupBody,
   validateSigninBody,
+  validateCard,
+  validateMongooseIdInRequest,
+  validateAvatar,
+  validateUpdatesToProfile,
 };

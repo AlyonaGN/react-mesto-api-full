@@ -14,24 +14,6 @@ const getUsers = (req, res, next) => {
     .catch(next);
 };
 
-const getUser = (req, res, next) => {
-  const { id } = req.params;
-  User.findById(id)
-    .orFail(new Error('NotFound'))
-    .then((userData) => {
-      res.send(userData);
-    })
-    .catch((error) => {
-      if (error.name === 'CastError') {
-        throw new IncorrectInputError('Переданы некорректные данные');
-      } else if (error.message === 'NotFound') {
-        throw new NotFoundError('Объект не найден');
-      }
-      throw error;
-    })
-    .catch(next);
-};
-
 const getMyUser = (req, res, next) => {
   const id = req.user._id;
   User.findById(id)
@@ -93,7 +75,6 @@ const updateProfile = (req, res, next) => {
   }, {
     new: true,
     runValidators: true,
-    upsert: true,
     omitUndefined: true,
   })
     .then((user) => res.send(user))
@@ -114,7 +95,6 @@ const updateAvatar = (req, res, next) => {
   User.findOneAndUpdate({ _id: id }, { avatar }, {
     new: true,
     runValidators: true,
-    upsert: true,
   })
     .then((user) => res.send(user))
     .catch((error) => {
@@ -143,7 +123,6 @@ const login = (req, res, next) => {
 
 module.exports = {
   getUsers,
-  getUser,
   getMyUser,
   createUser,
   login,
