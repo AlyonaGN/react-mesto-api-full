@@ -12,17 +12,6 @@ const validateMongooseIdInParams = celebrate({
   }),
 });
 
-const validateMongooseIdInRequest = celebrate({
-  body: Joi.object().keys({
-    _id: Joi.string().alphanum().custom((value, helpres) => {
-      if (ObjectId.isValid(value)) {
-        return value;
-      }
-      return helpres.message('Невалидный id');
-    }),
-  }),
-});
-
 const validateSignupBody = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
@@ -87,7 +76,6 @@ module.exports = {
   validateSignupBody,
   validateSigninBody,
   validateCard,
-  validateMongooseIdInRequest,
   validateAvatar,
   validateUpdatesToProfile,
 };
