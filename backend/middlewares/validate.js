@@ -52,7 +52,7 @@ const validateCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().custom((value, helpres) => {
-      if (/https?:\/\/(www\.)?([^#\s])+\.[^#\s]+#?$/.test(value)) {
+      if (/https?:\/\/(www\.)?([a-zA-Zа-яА-я0-9/_%-])+\.[a-zA-Zа-яА-я0-9/_%-]+#?$/.test(value)) {
         return value;
       }
       return helpres.message('Невалидная ссылка');
@@ -63,7 +63,7 @@ const validateCard = celebrate({
 const validateAvatar = celebrate({
   body: Joi.object().keys({
     avatar: Joi.string().required().custom((value, helpres) => {
-      if (/https?:\/\/(www\.)?([^#\s])+\.[^#\s]+#?$/.test(value)) {
+      if (/https?:\/\/(www\.)?([a-zA-Zа-яА-я0-9/_%-])+\.[a-zA-Zа-яА-я0-9/_%-]+#?$/.test(value)) {
         return value;
       }
       return helpres.message('Невалидная ссылка');
