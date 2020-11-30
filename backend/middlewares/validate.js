@@ -14,7 +14,7 @@ const validateMongooseIdInParams = celebrate({
 
 const validateMongooseIdInRequest = celebrate({
   body: Joi.object().keys({
-    _id: Joi.string().alphanum().required().custom((value, helpres) => {
+    _id: Joi.string().alphanum().custom((value, helpres) => {
       if (ObjectId.isValid(value)) {
         return value;
       }
