@@ -15,11 +15,12 @@ const validateMongooseIdInParams = celebrate({
 const validateToken = celebrate({
   headers: Joi.object()
     .keys({
-      authorization: Joi.string()
-        .pattern(
-          /^Bearer.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/,
-        )
-        .required(),
+      authorization: Joi.string().required().custom((value, helpres) => {
+        if (/^Bearer.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/.test(value)) {
+          return value;
+        }
+        return helpres.message('Невалидный токен');
+      }),
     })
     .unknown(true),
 });
