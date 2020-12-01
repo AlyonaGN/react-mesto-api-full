@@ -12,6 +12,18 @@ const validateMongooseIdInParams = celebrate({
   }),
 });
 
+const validateToken = celebrate({
+  headers: Joi.object()
+    .keys({
+      authorization: Joi.string()
+        .pattern(
+          /^Bearer.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/,
+        )
+        .required(),
+    })
+    .unknown(true),
+});
+
 const validateSignupBody = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
@@ -75,6 +87,7 @@ module.exports = {
   validateMongooseIdInParams,
   validateSignupBody,
   validateSigninBody,
+  validateToken,
   validateCard,
   validateAvatar,
   validateUpdatesToProfile,
